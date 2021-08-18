@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker build --no-cache --force-rm -t myueransim_nocmd --file ./Dockerfile .
-
+docker build --no-cache --force-rm -t myueransim --file ./Dockerfile .

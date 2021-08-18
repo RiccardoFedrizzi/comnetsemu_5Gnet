@@ -95,7 +95,8 @@ RUN apt-get update && \
         python3-wheel \
         python3-pip \
         mongodb \
-        iptables && \
+        iptables \
+        tcpdump && \
     apt-get autoremove -y && apt-get autoclean
 
 RUN pip3 install click
