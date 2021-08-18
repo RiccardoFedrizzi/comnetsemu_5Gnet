@@ -1,0 +1,121 @@
+logger:
+    file: /open5gs/install/var/log/open5gs/smf.log
+
+
+smf:
+    sbi:
+      - addr: 127.0.0.4
+        port: 7777
+    pfcp:
+      - addr: 192.168.0.111
+    gtpc:
+      - addr: 127.0.0.4
+    gtpu:
+      - addr: 127.0.0.4
+    subnet:
+      - addr: 10.45.0.1/16
+        dnn: internet
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+      - 2001:4860:4860::8888
+      - 2001:4860:4860::8844
+    mtu: 1400
+    freeDiameter: /open5gs/install/etc/freeDiameter/smf.conf
+
+
+nrf:
+    sbi:
+      - addr:
+          - 127.0.0.10
+        port: 7777
+
+
+upf:
+    pfcp:
+      - addr: 192.168.0.112
+        dnn: internet
+
+#
+# parameter:
+#
+#  o Number of output streams per SCTP associations.
+#      sctp_streams: 30
+#
+#  o Disable use of IPv4 addresses (only IPv6)
+#      no_ipv4: true
+#
+#  o Disable use of IPv6 addresses (only IPv4)
+#      no_ipv6: true
+#
+#  o Prefer IPv4 instead of IPv6 for estabishing new GTP connections.
+#      prefer_ipv4: true
+#
+#  o Disable selection of UPF PFCP in Round-Robin manner
+#      no_pfcp_rr_select: true
+#
+parameter:
+
+#
+# max:
+#
+# o Maximum Number of UE per AMF/MME
+#    ue: 1024
+# o Maximum Number of gNB/eNB per AMF/MME
+#    gnb: 32
+#
+max:
+
+#
+# pool:
+#
+# o The default memory pool size was set assuming 1024 UEs.
+#   To connect more UEs, you need to increase the size further.
+#
+#   - Pool-size 128         => 65536 Number
+#   - Pool-size 256         => 16384 Number
+#   - Pool-size 512         => 4096 Number
+#   - Pool-size 1024        => 1024 Number
+#   - Pool-size 2048        => 512 Number
+#   - Pool-size 8192        => 128 Number
+#   - Pool-size 1024*1024   => 8 Number
+#
+#    128:  65536
+#    256:  16384
+#    512:  4096
+#    1024: 1024
+#    2048: 512
+#    8192: 128
+#    big:  8
+#
+pool:
+
+#
+# time:
+#
+#  o NF Instance Heartbeat (Default : 0)
+#    NFs will not send heart-beat timer in NFProfile
+#    NRF will send heart-beat timer in NFProfile
+#
+#  o NF Instance Heartbeat (20 seconds)
+#    NFs will send heart-beat timer (20 seconds) in NFProfile
+#    NRF can change heart-beat timer in NFProfile
+#
+#    nf_instance:
+#      heartbeat: 20
+#
+#  o Message Wait Duration (Default : 10,000 ms = 10 seconds)
+#
+#  o Message Wait Duration (3000 ms)
+#    message:
+#        duration: 3000
+#
+#  o Handover Wait Duration (Default : 300 ms)
+#    Time to wait for SMF to send
+#    PFCP Session Modification Request(Remove Indirect Tunnel) to the UPF
+#    after sending Nsmf_PDUSession_UpdateSMContext Response(hoState:COMPLETED)
+#
+#  o Handover Wait Duration (500ms)
+#    handover:
+#        duration: 500
+time:
