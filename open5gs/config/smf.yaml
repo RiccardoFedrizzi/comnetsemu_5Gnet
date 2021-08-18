@@ -15,6 +15,8 @@ smf:
     subnet:
       - addr: 10.45.0.1/16
         dnn: internet
+      - addr: 10.46.0.1/16
+        dnn: mec
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -35,6 +37,8 @@ upf:
     pfcp:
       - addr: 192.168.0.112
         dnn: internet
+      - addr: 192.168.0.113
+        dnn: mec
 
 #
 # parameter:

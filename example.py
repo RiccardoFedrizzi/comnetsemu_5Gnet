@@ -32,7 +32,7 @@ if __name__ == "__main__":
     info("*** Adding Host for open5gs CP\n")
     cp = net.addDockerHost(
         "open5gs_CP",
-        dimage="my5gc_nocmd",
+        dimage="my5gc",
         ip="192.168.0.111/24",
         # dcmd="",
         dcmd="/open5gs/install/etc/open5gs/5gc_cp_init.sh",
@@ -43,15 +43,11 @@ if __name__ == "__main__":
                     "bind": "/open5gs/install/var/log/open5gs",
                     "mode": "rw",
                 },
-                prj_folder + "/mongolog": {
-                    "bind": "/var/log/mongodb/",
-                    "mode": "rw",
-                },
                 prj_folder + "/mongodbdata": {
                     "bind": "/var/lib/mongodb",
                     "mode": "rw",
                 },
-                prj_folder + "/my_yaml": {
+                prj_folder + "/open5gs/config": {
                     "bind": "/open5gs/install/etc/open5gs",
                     "mode": "rw",
                 },
@@ -68,20 +64,22 @@ if __name__ == "__main__":
     )
 
     info("*** Adding open5gs_UP\n")
+    env["COMPONENT_NAME"]="upf"
     up = net.addDockerHost(
-        "open5gs_UP",
-        dimage="my5gc_nocmd",
+        "upf",
+        dimage="my5gc",
         ip="192.168.0.112/24",
         # dcmd="",
-        dcmd="/open5gs/install/etc/open5gs/5gc_up_init.sh",
+        dcmd="/open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
         docker_args={
+            "environment": env,
             "volumes": {
                 prj_folder + "/log": {
                     "bind": "/open5gs/install/var/log/open5gs",
                     "mode": "rw",
                 },
-                prj_folder + "/my_yaml": {
-                    "bind": "/open5gs/install/etc/open5gs",
+                prj_folder + "/open5gs/config": {
+                    "bind": "/open5gs/install/etc/open5gs/temp",
                     "mode": "rw",
                 },
                 "/etc/timezone": {
@@ -92,7 +90,6 @@ if __name__ == "__main__":
                     "bind": "/etc/localtime",
                     "mode": "ro",
                 },
-                # "/dev": {"bind": "/dev", "mode": "rw"},
             },
             "cap_add": ["NET_ADMIN"],
             "sysctls": {"net.ipv4.ip_forward": 1},
@@ -104,14 +101,14 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="ueransim-gnb-1"
     gnb = net.addDockerHost(
         "gnb", 
-        dimage="myueransim_nocmd",
+        dimage="myueransim",
         ip="192.168.0.131/24",
         # dcmd="",
         dcmd="/mnt/ueransim/open5gs_gnb_init.sh",
         docker_args={
             "environment": env,
             "volumes": {
-                prj_folder + "/ueransim": {
+                prj_folder + "/ueransim/config": {
                     "bind": "/mnt/ueransim",
                     "mode": "rw",
                 },
@@ -138,14 +135,14 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="ueransim-ue-1"
     ue = net.addDockerHost(
         "ue", 
-        dimage="myueransim_nocmd",
+        dimage="myueransim",
         ip="192.168.0.132/24",
         # dcmd="",
         dcmd="/mnt/ueransim/open5gs_ue_init.sh",
         docker_args={
             "environment": env,
             "volumes": {
-                prj_folder + "/ueransim": {
+                prj_folder + "/ueransim/config": {
                     "bind": "/mnt/ueransim",
                     "mode": "rw",
                 },

@@ -58,20 +58,56 @@ if __name__ == "__main__":
     )
 
     info("*** Adding open5gs_UP\n")
+    env["COMPONENT_NAME"]="upf"
     up = net.addDockerHost(
-        "open5gs_UP",
+        "upf",
         dimage="my5gc",
         ip="192.168.0.112/24",
         # dcmd="",
-        dcmd="/open5gs/install/etc/open5gs/5gc_up_init.sh",
+        dcmd="/open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
         docker_args={
+            "environment": env,
             "volumes": {
                 prj_folder + "/log": {
                     "bind": "/open5gs/install/var/log/open5gs",
                     "mode": "rw",
                 },
                 prj_folder + "/open5gs/config": {
-                    "bind": "/open5gs/install/etc/open5gs",
+                    "bind": "/open5gs/install/etc/open5gs/temp",
+                    "mode": "rw",
+                },
+                "/etc/timezone": {
+                    "bind": "/etc/timezone",
+                    "mode": "ro",
+                },
+                "/etc/localtime": {
+                    "bind": "/etc/localtime",
+                    "mode": "ro",
+                },
+            },
+            "cap_add": ["NET_ADMIN"],
+            "sysctls": {"net.ipv4.ip_forward": 1},
+            "devices": "/dev/net/tun:/dev/net/tun:rwm"
+        },
+    )
+
+    info("*** Adding open5gs_UP\n")
+    env["COMPONENT_NAME"]="upf_mec"
+    up1 = net.addDockerHost(
+        "upf_mec",
+        dimage="my5gc",
+        ip="192.168.0.113/24",
+        # dcmd="",
+        dcmd="/open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
+        docker_args={
+            "environment": env,
+            "volumes": {
+                prj_folder + "/log": {
+                    "bind": "/open5gs/install/var/log/open5gs",
+                    "mode": "rw",
+                },
+                prj_folder + "/open5gs/config": {
+                    "bind": "/open5gs/install/etc/open5gs/temp",
                     "mode": "rw",
                 },
                 "/etc/timezone": {
@@ -167,12 +203,15 @@ if __name__ == "__main__":
     s3 = net.addSwitch("s3")
 
     info("*** Adding links\n")
-    net.addLink(ue,  s1, bw=1000, delay="1ms", intfName1="ue-s1",  intfName2="s1-ue")
-    net.addLink(gnb, s1, bw=1000, delay="1ms", intfName1="gnb-s1", intfName2="s1-gnb")
-    net.addLink(up,  s2, bw=1000, delay="1ms", intfName1="up-s1",  intfName2="s1-up")
-    net.addLink(cp,  s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
     net.addLink(s1,  s2, bw=1000, delay="1ms", intfName1="s1-s2",  intfName2="s2-s1")
     net.addLink(s2,  s3, bw=1000, delay="1ms", intfName1="s2-s3",  intfName2="s3-s2")
+    
+    net.addLink(ue,  s1, bw=1000, delay="1ms", intfName1="ue-s1",  intfName2="s1-ue")
+    net.addLink(gnb, s1, bw=1000, delay="1ms", intfName1="gnb-s1", intfName2="s1-gnb")
+    
+    net.addLink(cp,  s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
+    net.addLink(up,  s3, bw=1000, delay="1ms", intfName1="up-s3",  intfName2="s3-up")
+    net.addLink(up1, s2, bw=1000, delay="1ms", intfName1="up1-s2", intfName2="s2-up1")
 
     info("\n*** Starting network\n")
     net.start()
