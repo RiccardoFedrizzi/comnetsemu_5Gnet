@@ -101,7 +101,7 @@ if __name__ == "__main__":
         docker_args={
             "environment": env,
             "volumes": {
-                prj_folder + "/ueransim": {
+                prj_folder + "/ueransim/config": {
                     "bind": "/mnt/ueransim",
                     "mode": "rw",
                 },
@@ -135,7 +135,7 @@ if __name__ == "__main__":
         docker_args={
             "environment": env,
             "volumes": {
-                prj_folder + "/ueransim": {
+                prj_folder + "/ueransim/config": {
                     "bind": "/mnt/ueransim",
                     "mode": "rw",
                 },
