@@ -60,7 +60,7 @@ Slice 2 configuration
 
 The configuration should look like this:
 
-<img src="./images/WebUI_config.jpg" title="./images/WebUI_config.jpg" width=1000px></img>
+<img src="./images/WebUI_config.JPG" title="./images/WebUI_config.JPG" width=1000px></img>
 
 
 ### Test the environment
