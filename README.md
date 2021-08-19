@@ -30,7 +30,7 @@ $ sudo python3 example1.py
 The scenario includes 5 DockerHosts as shown in the figure below.
 The UE starts two PDU session one for each slice defined in the core network.
 
-<img src="./images/topology.png" title="./images/topology.png" width=1000px></img>
+<img src="./images/topology.jpg" title="./images/topology.jpg" width=1000px></img>
 
 Notice that at the first run the set-up should not work due to missing information in the 5GC.
 To configure it we should leverage the WebUI by opening the following page in a browser on the host OS.
