@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     info("*** Adding Host for open5gs CP\n")
     cp = net.addDockerHost(
-        "open5gs_CP",
+        "cp",
         dimage="my5gc",
         ip="192.168.0.111/24",
         # dcmd="",
@@ -138,7 +138,7 @@ if __name__ == "__main__":
         dimage="myueransim",
         ip="192.168.0.132/24",
         # dcmd="",
-        dcmd="/mnt/ueransim/open5gs_ue_init.sh",
+        dcmd="/mnt/ueransim/open5gs_ue_init_single_pdu.sh",
         docker_args={
             "environment": env,
             "volumes": {

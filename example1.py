@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     info("*** Adding Host for open5gs CP\n")
     cp = net.addDockerHost(
-        "open5gs_CP",
+        "cp",
         dimage="my5gc",
         ip="192.168.0.111/24",
         # dcmd="",
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         },
     )
 
-    info("*** Adding open5gs_UP\n")
+    info("*** Adding Host for open5gs UPF\n")
     env["COMPONENT_NAME"]="upf"
     up = net.addDockerHost(
         "upf",
@@ -91,9 +91,9 @@ if __name__ == "__main__":
         },
     )
 
-    info("*** Adding open5gs_UP\n")
+    info("*** Adding Host for open5gs UPF MEC\n")
     env["COMPONENT_NAME"]="upf_mec"
-    up1 = net.addDockerHost(
+    upf_mec = net.addDockerHost(
         "upf_mec",
         dimage="my5gc",
         ip="192.168.0.113/24",
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     )
 
     info("*** Adding gNB\n")
-    env["COMPONENT_NAME"]="ueransim-gnb-1"
+    env["COMPONENT_NAME"]="gnb"
     gnb = net.addDockerHost(
         "gnb", 
         dimage="myueransim",
@@ -161,7 +161,7 @@ if __name__ == "__main__":
     )
 
     info("*** Adding UE\n")
-    env["COMPONENT_NAME"]="ueransim-ue-1"
+    env["COMPONENT_NAME"]="ue"
     ue = net.addDockerHost(
         "ue", 
         dimage="myueransim",
@@ -203,15 +203,15 @@ if __name__ == "__main__":
     s3 = net.addSwitch("s3")
 
     info("*** Adding links\n")
-    net.addLink(s1,  s2, bw=1000, delay="1ms", intfName1="s1-s2",  intfName2="s2-s1")
-    net.addLink(s2,  s3, bw=1000, delay="1ms", intfName1="s2-s3",  intfName2="s3-s2")
+    net.addLink(s1,  s2, bw=1000, delay="10ms", intfName1="s1-s2",  intfName2="s2-s1")
+    net.addLink(s2,  s3, bw=1000, delay="50ms", intfName1="s2-s3",  intfName2="s3-s2")
     
     net.addLink(ue,  s1, bw=1000, delay="1ms", intfName1="ue-s1",  intfName2="s1-ue")
     net.addLink(gnb, s1, bw=1000, delay="1ms", intfName1="gnb-s1", intfName2="s1-gnb")
     
-    net.addLink(cp,  s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
-    net.addLink(up,  s3, bw=1000, delay="1ms", intfName1="up-s3",  intfName2="s3-up")
-    net.addLink(up1, s2, bw=1000, delay="1ms", intfName1="up1-s2", intfName2="s2-up1")
+    net.addLink(cp,      s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
+    net.addLink(up,      s3, bw=1000, delay="1ms", intfName1="up-s3",  intfName2="s3-up")
+    net.addLink(upf_mec, s2, bw=1000, delay="1ms", intfName1="upf_mec-s2", intfName2="s2-upf_mec")
 
     info("\n*** Starting network\n")
     net.start()

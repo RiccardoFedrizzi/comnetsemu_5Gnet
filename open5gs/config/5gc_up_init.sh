@@ -9,6 +9,8 @@ elif [[ "$COMPONENT_NAME" =~ ^upf$ ]]; then
     ip link set ogstun up
     iptables -t nat -A POSTROUTING -s 10.45.0.1/16 ! -o ogstun -j MASQUERADE
 
+    iperf3 -B 10.45.0.1 -s -fm &
+
     cp /open5gs/install/etc/open5gs/temp/upf.yaml /open5gs/install/etc/open5gs/upf.yaml 
 
 elif [[ "$COMPONENT_NAME" =~ ^upf_mec$ ]]; then
@@ -16,6 +18,8 @@ elif [[ "$COMPONENT_NAME" =~ ^upf_mec$ ]]; then
     ip addr add 10.46.0.1/16 dev ogstun
     ip link set ogstun up
     iptables -t nat -A POSTROUTING -s 10.46.0.1/16 ! -o ogstun -j MASQUERADE
+
+    iperf3 -B 10.46.0.1 -s -fm &
 
     cp /open5gs/install/etc/open5gs/temp/upf_mec.yaml  /open5gs/install/etc/open5gs/upf.yaml 
 

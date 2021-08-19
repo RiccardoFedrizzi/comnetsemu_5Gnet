@@ -78,7 +78,8 @@ RUN apt-get update && \
         net-tools \
         iputils-ping \
         curl \
-        tcpdump && \
+        tcpdump \
+        iperf3 && \
     apt-get autoremove -y && apt-get autoclean
 
 COPY --from=builder /UERANSIM/build /UERANSIM/build
