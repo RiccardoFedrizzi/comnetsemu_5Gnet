@@ -27,12 +27,40 @@ cd ../open5gs
 $ sudo python3 example1.py
 ```
 
-The scenario includes 5 DockerHosts connected through a simple network.
-- Host 1: Contains the user equipment with two PDU session active (sst=1 and sst=2).
-- Host 2: Contains the gNB
-- Host 3: Contains the UPF terminating the PDU session for the slice with sst=2 (container upf_mec)
-- Host 4: Contains the UPF terminating the PDU session for the slice with sst=1 (container upf)
-- Host 5: Contains the CP functions
+The scenario includes 5 DockerHosts as shown in the figure below.
+The UE starts two PDU session one for each slice defined in the core network.
+
+<img src="./images/topology.png" title="./images/topology.png" width=1000px></img>
+
+Notice that at the first run the set-up should not work due to missing information in the 5GC.
+To configure it we should leverage the WebUI by opening the following page in a browser on the host OS.
+```
+http://192.168.56.101:3000/
+```
+
+The configuration is as follows:
+
+UE information:
+- IMSI = 001011234567895
+- USIM Type = OP
+- Operator Key (OPc/OP) = 11111111111111111111111111111111
+- key: '8baf473f2f8fd09487cccbd7097c6862'
+
+Slice 1 configuration
+- SST: 1
+- SD: 000001
+- Session-AMBR Downlink: 2 Mbps
+- Session-AMBR Uplink: 2 Mbps
+
+Slice 2 configuration
+- SST: 1
+- SD: 000001
+- Session-AMBR Downlink: 10 Mbps
+- Session-AMBR Uplink: 10 Mbps
+
+The configuration should look like this:
+
+<img src="./images/WebUI_config.jpg" title="./images/WebUI_config.jpg" width=1000px></img>
 
 
 ### Test the environment
@@ -62,7 +90,7 @@ Start ping test on the interfaces related to the two slices:
 
 Enter in the UE container:
 ``` 
-# ./enter_container ue
+# ./enter_container.sh ue
 ``` 
 
 Start bandwidth test leveraging the two slices:
@@ -73,7 +101,8 @@ iperf3 -c 10.46.0.1 -B 10.46.0.3 -t 5
 
 Open the open5gs WebUI and change the DL/UL bandwidth for slice 1.
 
-Update the PDU session in the UE.
+Update the PDU session in the UE. Notice how the session started specifying the slice, not the APN. The APN, and thus the UPF, is selected by the 5GC.
+
 ```
 # ./nr-cli imsi-001011234567895
 $ ps-establish IPv4 --sst 1 --sd 1
