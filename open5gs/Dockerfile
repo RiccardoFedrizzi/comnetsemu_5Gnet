@@ -112,8 +112,8 @@ COPY --from=builder /open5gs/install/etc /open5gs/install/etc
 COPY --from=builder /open5gs/install/lib /open5gs/install/lib
 COPY --from=builder /open5gs/webui /open5gs/webui
 
-COPY docker_init.sh /
-RUN chmod +x /docker_init.sh
+# COPY docker_init.sh /
+# RUN chmod +x /docker_init.sh
 
 # Set the working directory to open5gs
 WORKDIR /open5gs

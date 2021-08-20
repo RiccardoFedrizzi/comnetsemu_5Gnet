@@ -86,5 +86,5 @@ COPY --from=builder /UERANSIM/build /UERANSIM/build
 COPY --from=builder /UERANSIM/config /UERANSIM/config
 
 # Set the working directory to UERANSIM
-WORKDIR UERANSIM/build
+WORKDIR /UERANSIM/build
 

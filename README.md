@@ -96,12 +96,12 @@ Enter in the UE container:
 Start bandwidth test leveraging the two slices:
 ``` 
 iperf3 -c 10.45.0.1 -B 10.45.0.2 -t 5
-iperf3 -c 10.46.0.1 -B 10.46.0.3 -t 5
+iperf3 -c 10.46.0.1 -B 10.46.0.2 -t 5
 ``` 
 
 Open the open5gs WebUI and change the DL/UL bandwidth for slice 1.
 
-Update the PDU session in the UE. Notice how the session started specifying the slice, not the APN. The APN, and thus the UPF, is selected by the 5GC.
+Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC.
 
 ```
 # ./nr-cli imsi-001011234567895
