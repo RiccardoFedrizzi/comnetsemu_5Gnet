@@ -62,7 +62,7 @@ Start ping test on the interfaces related to the two slices:
 
 Enter in the UE container:
 ``` 
-# ./enter_container ue
+# ./enter_container.sh ue
 ``` 
 
 Start bandwidth test leveraging the two slices:
