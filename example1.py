@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     info("*** Adding Host for open5gs UPF\n")
     env["COMPONENT_NAME"]="upf"
-    up = net.addDockerHost(
+    upf = net.addDockerHost(
         "upf",
         dimage="my5gc",
         ip="192.168.0.112/24",
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     net.addLink(gnb, s1, bw=1000, delay="1ms", intfName1="gnb-s1", intfName2="s1-gnb")
     
     net.addLink(cp,      s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
-    net.addLink(up,      s3, bw=1000, delay="1ms", intfName1="up-s3",  intfName2="s3-up")
+    net.addLink(upf,     s3, bw=1000, delay="1ms", intfName1="upf-s3",  intfName2="s3-upf")
     net.addLink(upf_mec, s2, bw=1000, delay="1ms", intfName1="upf_mec-s2", intfName2="s2-upf_mec")
 
     info("\n*** Starting network\n")
