@@ -75,7 +75,7 @@ $ ./start_tcpdump.sh upf_mec
 #### Latency test
 Enter in the UE container:
 ``` 
-# ./enter_container ue
+# ./enter_container.sh ue
 ``` 
 
 Start ping test on the interfaces related to the two slices:
