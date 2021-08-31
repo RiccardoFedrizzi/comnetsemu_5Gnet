@@ -35,7 +35,7 @@ The UE starts two PDU session one for each slice defined in the core network.
 Notice that at the first run the set-up should not work due to missing information in the 5GC.
 To configure it we should leverage the WebUI by opening the following page in a browser on the host OS.
 ```
-http://192.168.56.101:3000/
+http://<VM_IP>:3000/
 ```
 
 The configuration is as follows:
@@ -115,6 +115,10 @@ iperf3 -c 10.45.0.1 -B 10.45.0.3 -t 5
 ```
 
 
+### Contact
+
+Main maintainer:
+- Riccardo Fedrizzi - rfedrizzi@fbk.eu
 
 
 
