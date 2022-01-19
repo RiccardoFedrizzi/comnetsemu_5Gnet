@@ -57,11 +57,15 @@ RUN apt-get update && \
         libcurl4-gnutls-dev \
         libnghttp2-dev \
         libtins-dev \
-        libidn11-dev
+        libidn11-dev \
+        libtalloc-dev
 
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # Get open5gs code and install
+# RUN git clone -b v2.3.2 --single-branch https://github.com/open5gs/open5gs && cd open5gs && \
+#     meson build --prefix=`pwd`/install && \
+#     ninja -C build && cd build && ninja install
 RUN git clone --recursive https://github.com/open5gs/open5gs && cd open5gs && \
     git checkout main && meson build --prefix=`pwd`/install && \
     ninja -C build && cd build && ninja install
@@ -87,6 +91,7 @@ RUN apt-get update && \
         libcurl4-gnutls-dev \
         libtins-dev \
         libidn11-dev \
+        libtalloc-dev \
         netbase \
         ifupdown \
         net-tools \

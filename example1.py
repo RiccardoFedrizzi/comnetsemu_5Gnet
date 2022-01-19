@@ -17,7 +17,8 @@ if __name__ == "__main__":
 
     setLogLevel("info")
 
-    prj_folder="/home/vagrant/ccn_project/comnetsemu_5Gnet"
+    prj_folder="/home/vagrant/comnetsemu/app/comnetsemu_5Gnet"
+    mongodb_folder="/home/vagrant/mongodbdata"
 
     env = dotenv_values( prj_folder + "/.env")
 
@@ -29,7 +30,7 @@ if __name__ == "__main__":
         dimage="my5gc",
         ip="192.168.0.111/24",
         # dcmd="",
-        dcmd="/open5gs/install/etc/open5gs/5gc_cp_init.sh",
+        dcmd="bash /open5gs/install/etc/open5gs/5gc_cp_init.sh",
         docker_args={
             "ports" : { "3000/tcp": 3000 },
             "volumes": {
@@ -37,7 +38,7 @@ if __name__ == "__main__":
                     "bind": "/open5gs/install/var/log/open5gs",
                     "mode": "rw",
                 },
-                prj_folder + "/mongodbdata": {
+                mongodb_folder: {
                     "bind": "/var/lib/mongodb",
                     "mode": "rw",
                 },
@@ -64,7 +65,7 @@ if __name__ == "__main__":
         dimage="my5gc",
         ip="192.168.0.112/24",
         # dcmd="",
-        dcmd="/open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
+        dcmd="bash /open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
         docker_args={
             "environment": env,
             "volumes": {
@@ -88,7 +89,7 @@ if __name__ == "__main__":
             "cap_add": ["NET_ADMIN"],
             "sysctls": {"net.ipv4.ip_forward": 1},
             "devices": "/dev/net/tun:/dev/net/tun:rwm"
-        },
+        }, 
     )
 
     info("*** Adding Host for open5gs UPF MEC\n")
@@ -98,7 +99,7 @@ if __name__ == "__main__":
         dimage="my5gc",
         ip="192.168.0.113/24",
         # dcmd="",
-        dcmd="/open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
+        dcmd="bash /open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
         docker_args={
             "environment": env,
             "volumes": {
@@ -118,7 +119,6 @@ if __name__ == "__main__":
                     "bind": "/etc/localtime",
                     "mode": "ro",
                 },
-                # "/dev": {"bind": "/dev", "mode": "rw"},
             },
             "cap_add": ["NET_ADMIN"],
             "sysctls": {"net.ipv4.ip_forward": 1},
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         dimage="myueransim",
         ip="192.168.0.131/24",
         # dcmd="",
-        dcmd="/mnt/ueransim/open5gs_gnb_init.sh",
+        dcmd="bash /mnt/ueransim/open5gs_gnb_init.sh",
         docker_args={
             "environment": env,
             "volumes": {
@@ -167,7 +167,7 @@ if __name__ == "__main__":
         dimage="myueransim",
         ip="192.168.0.132/24",
         # dcmd="",
-        dcmd="/mnt/ueransim/open5gs_ue_init.sh",
+        dcmd="bash /mnt/ueransim/open5gs_ue_init.sh",
         docker_args={
             "environment": env,
             "volumes": {

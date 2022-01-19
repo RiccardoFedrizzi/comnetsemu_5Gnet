@@ -2,9 +2,9 @@ Emulate a 5G network deployment in comnetsemu.
 Demonstrate distributed UPF deployment and slice-base UPF selection.
 
 Tested Versions:
-- Comnetsemu: v0.1.12 (Installed following "Option 3" from [here](https://git.comnets.net/public-repo/comnetsemu) )
-- UERANSIM: v3.1.9
-- Open5gs: v2.3.2
+- Comnetsemu: v0.3.0 (Installed following either "Option 1" or "Option 3" from [here](https://git.comnets.net/public-repo/comnetsemu) )
+- UERANSIM: v3.2.6
+- Open5gs: v2.4.2
 
 ## Build Instructions
 
