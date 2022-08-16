@@ -219,7 +219,6 @@ if __name__ == "__main__":
     o5gs.removeAllSubscribers()
     with open( prj_folder + "/open5gs/subscriber_profile.json" , 'r') as f:
         profile = json.load( f )
-    # print( json.dumps(profile,indent=2) )
     o5gs.addSubscriber(profile)
 
 
