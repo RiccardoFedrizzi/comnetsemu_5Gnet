@@ -21,6 +21,7 @@ if __name__ == "__main__":
     mongodb_folder="/home/vagrant/mongodbdata"
 
     env = dotenv_values( prj_folder + "/.env")
+    # env = dict()
 
     net = Containernet(controller=Controller, link=TCLink)
 

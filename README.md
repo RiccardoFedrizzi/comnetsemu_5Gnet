@@ -6,6 +6,10 @@ Tested Versions:
 - UERANSIM: v3.2.6
 - Open5gs: v2.4.2
 
+Python packages:
+- pymongo
+- python-dotenv
+
 ## Build Instructions
 
 Clone repository in the comnetsemu VM.
@@ -23,6 +27,8 @@ cd ../open5gs
 ## Run experiments
 
 ### Start the network topology:
+
+#### example1.py
 ```
 $ sudo python3 example1.py
 ```
@@ -49,18 +55,29 @@ UE information:
 Slice 1 configuration
 - SST: 1
 - SD: 000001
+- DNN: internet
 - Session-AMBR Downlink: 2 Mbps
 - Session-AMBR Uplink: 2 Mbps
 
 Slice 2 configuration
-- SST: 1
+- SST: 2
 - SD: 000001
+- DNN: mec
 - Session-AMBR Downlink: 10 Mbps
 - Session-AMBR Uplink: 10 Mbps
 
 The configuration should look like this:
 
 <img src="./images/WebUI_config.JPG" title="./images/WebUI_config.JPG" width=800px></img>
+
+#### example2.py
+```
+$ sudo python3 example2.py
+```
+
+This example creates the same environment of example1.py but leveraging python scripts to initialise the open5GS control plane (instead of using the webUI).
+
+Disclaimer: all the previous subcribers registered with the webUI will be lost and new one will be created via the scripts
 
 
 ### Test the environment
