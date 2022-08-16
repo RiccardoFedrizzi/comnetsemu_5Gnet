@@ -66,6 +66,7 @@ Slice 2 configuration
 - Session-AMBR Downlink: 10 Mbps
 - Session-AMBR Uplink: 10 Mbps
 
+
 The configuration should look like this:
 
 <img src="./images/WebUI_config.JPG" title="./images/WebUI_config.JPG" width=800px></img>
