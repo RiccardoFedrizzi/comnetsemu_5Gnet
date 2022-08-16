@@ -28,7 +28,7 @@ cd ../open5gs
 
 ### Start the network topology:
 
-#### example1.py
+#### Running example1.py
 ```
 $ sudo python3 example1.py
 ```
@@ -66,20 +66,22 @@ Slice 2 configuration
 - Session-AMBR Downlink: 10 Mbps
 - Session-AMBR Uplink: 10 Mbps
 
-
 The configuration should look like this:
 
 <img src="./images/WebUI_config.JPG" title="./images/WebUI_config.JPG" width=800px></img>
 
-#### example2.py
+You can now proceed testing the environment as below
+
+#### Running example2.py
+This example creates the same environment of example1.py but leveraging python scripts to initialise the open5GS control plane (instead of using the webUI).
+
+Disclaimer: all the previous subcribers registered with the webUI will be lost and a new one will be created.
+
 ```
 $ sudo python3 example2.py
 ```
 
-This example creates the same environment of example1.py but leveraging python scripts to initialise the open5GS control plane (instead of using the webUI).
-
-Disclaimer: all the previous subcribers registered with the webUI will be lost and new one will be created via the scripts
-
+You can now proceed testing the environment as below
 
 ### Test the environment
 
