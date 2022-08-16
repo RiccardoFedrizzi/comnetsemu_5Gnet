@@ -8,7 +8,7 @@ Tested Versions:
 
 Python packages:
 - pymongo
-- python-dotenv
+- json
 
 ## Build Instructions
 
@@ -74,7 +74,7 @@ You can now proceed testing the environment as below
 
 
 #### Running example2.py
-This example creates the same environment of example1.py but leveraging python scripts to initialise the open5GS control plane (instead of using the webUI).
+This example creates the same environment of example1.py but the open5GS control plane configuration is done programmatically without using the webUI. (Note: adapted the python class in the open5gs repo [here](https://github.com/open5gs/open5gs/blob/main/misc/db/python/Open5GS.py) )
 
 Disclaimer: all the previous subcribers registered with the webUI will be lost and a new one will be created.
 
@@ -105,22 +105,32 @@ Start ping test on the interfaces related to the two slices:
 # ping -c 3 -n -I uesimtun1 www.google.com
 ``` 
 
+Observe the Round Trip Time using uesimtun0 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and ueransim1 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
 
 
 #### Bandwidth test
 
 Enter in the UE container:
 ``` 
-# ./enter_container.sh ue
+$ ./enter_container.sh ue
 ``` 
 
 Start bandwidth test leveraging the two slices:
 ``` 
-iperf3 -c 10.45.0.1 -B 10.45.0.2 -t 5
-iperf3 -c 10.46.0.1 -B 10.46.0.2 -t 5
+# iperf3 -c 10.45.0.1 -B 10.45.0.2 -t 5
+# iperf3 -c 10.46.0.1 -B 10.46.0.2 -t 5
 ``` 
 
+Observe the Round Trip Time using uesimtun0 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and ueransim1 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
+
+Change the maximum bit-rate available for one slice:
+
 Open the open5gs WebUI and change the DL/UL bandwidth for slice 1.
+
+Enter in the UE container:
+``` 
+$ ./enter_container.sh ue
+``` 
 
 Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC.
 
