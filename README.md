@@ -72,6 +72,7 @@ The configuration should look like this:
 
 You can now proceed testing the environment as below
 
+
 #### Running example2.py
 This example creates the same environment of example1.py but leveraging python scripts to initialise the open5GS control plane (instead of using the webUI).
 
