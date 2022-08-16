@@ -121,7 +121,7 @@ Start bandwidth test leveraging the two slices:
 # iperf3 -c 10.46.0.1 -B 10.46.0.2 -t 5
 ``` 
 
-Observe the Round Trip Time using uesimtun0 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and ueransim1 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
+Observe the Round Trip Time using the UE interface 10.45.0.2 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and using the UE interface 10.46.0.2 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
 
 Change the maximum bit-rate available for one slice:
 
