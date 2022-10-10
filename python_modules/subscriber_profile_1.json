@@ -1,0 +1,65 @@
+{
+    "imsi": "001011234567895",
+    "subscribed_rau_tau_timer": 12,
+    "network_access_mode": 0,
+    "subscriber_status": 0,
+    "access_restriction_data": 32,
+    "slice": [
+        {
+            "sst": 1,
+            "default_indicator": true,
+            "sd": "000001",
+            "session": [
+                {
+                    "name": "internet",
+                    "type": 3,
+                    "pcc_rule": [],
+                    "ambr": {
+                        "Comment": "unit=2 ==> Mbps",
+                        "uplink":   {"value": 10, "unit": 2},
+                        "downlink": {"value": 10, "unit": 2}
+                    },
+                    "qos": {
+                        "index": 8,
+                        "arp": {"priority_level": 15, "pre_emption_capability": 1, "pre_emption_vulnerability": 1}
+                    }
+                }
+            ]
+        },
+        {
+            "sst": 2,
+            "default_indicator": null,
+            "sd": "000001",
+            "session": [
+                {
+                    "name": "mec",
+                    "type": 3,
+                    "pcc_rule": [],
+                    "ambr": {
+                        "Comment": "unit=2 ==> Mbps",
+                        "uplink":   {"value": 20, "unit": 2},
+                        "downlink": {"value": 20, "unit": 2}
+                    },
+                    "qos": {
+                        "index": 8,
+                        "arp": {"priority_level": 15, "pre_emption_capability": 1, "pre_emption_vulnerability": 1}
+                    }
+                }
+            ]
+        }
+    ],
+    "ambr": {
+        "Comment": "unit=2 ==> Mbps",
+        "uplink": {"value": 1, "unit": 2},
+        "downlink": {"value": 1, "unit": 2}
+    },
+    "security": {
+        "k": "8baf473f2f8fd09487cccbd7097c6862",
+        "amf": "8000",
+        "op": "11111111111111111111111111111111",
+        "opc": null
+    },
+    "msisdn": [],
+    "schema_version": 1,
+    "__v": 0
+}

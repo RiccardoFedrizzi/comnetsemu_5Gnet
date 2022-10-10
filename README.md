@@ -86,7 +86,8 @@ $ sudo python3 example2.py
 
 ### Check UE connections
 
-Notice how the UE DockerHost has been initiated running 'open5gs_ue_init.sh' which, based on the configuration provided in 'open5gs-ue.yaml' creates two default UE connections.
+Notice how the UE DockerHost has been initiated running `open5gs_ue_init.sh` which, based on the configuration provided in `open5gs-ue.yaml`, creates two default UE connections.
+The sessions are started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC since, in `subscriber_profile.json`, a slice is associated to a session with specific DNN.
 
 Enter the container and verify UE connections:
 
@@ -165,25 +166,42 @@ Observe how the data-rate in the two cases follows the maximum data-rate specifi
 
 #### Change the maximum bit-rate available for one slice:
 
-Open the open5gs WebUI and change the DL/UL bandwidth for slice 1.
+Here we change the slice profiles updating the maximum bit-rate and observe the results on the iperf test.
+
+##### Alternative 1
+Open the open5gs WebUI and change the DL/UL bandwidth as follows:
+- for sst 1: MBR DL/UL = 10 Mbps
+- for sst 2: MBR DL/UL = 20 Mbps
+
+##### Alternative 2
+Run the script `update_subscribers.py`.
+
+##### Test new connections
 
 Enter in the UE container:
 ``` 
 $ ./enter_container.sh ue
 ``` 
 
-Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC since, in `subscriber_profile.json`, a slice is associated to a session with specific DNN.
+Start new PDU sessions in the UE: 
 
 ```
 # ./nr-cli imsi-001011234567895
 $ ps-establish IPv4 --sst 1 --sd 1
+$ ps-establish IPv4 --sst 2 --sd 1
 $ status
 ```
 
-Start again a bandwidth test in the UE leveraging the new PDU session:
+Now you should see 4 interfaces `uesimtun1-4` created. This is because the old UE connections are kept with the previous settings as long as we do not remove them.
+
+Start again a bandwidth test in the UE leveraging the new PDU session. NB: use the IPs of the inferfaces for the new sessions (`uesimtun3` and `uesimtun4`):
+
 ``` 
 iperf3 -c 10.45.0.1 -B 10.45.0.3 -t 5
+iperf3 -c 10.46.0.1 -B 10.46.0.3 -t 5
 ```
+
+From the results you should observe that the achieved bit-rate have changed accordingly to the new setting. 
 
 
 ### Contact
