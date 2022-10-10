@@ -172,7 +172,7 @@ Enter in the UE container:
 $ ./enter_container.sh ue
 ``` 
 
-Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC since, in subscriber_profile.json a slice is associated to a session with specific DNN.
+Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC since, in `subscriber_profile.json`, a slice is associated to a session with specific DNN.
 
 ```
 # ./nr-cli imsi-001011234567895
