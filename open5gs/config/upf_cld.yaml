@@ -1,5 +1,5 @@
 logger:
-    file: /open5gs/install/var/log/open5gs/upf.log
+    file: /open5gs/install/var/log/open5gs/upf_cld.log
 
 upf:
     pfcp:

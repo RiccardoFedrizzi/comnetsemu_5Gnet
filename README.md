@@ -82,27 +82,66 @@ Disclaimer: all the previous subcribers registered with the webUI will be lost a
 $ sudo python3 example2.py
 ```
 
-You can now proceed testing the environment as below
+
+
+### Check UE connections
+
+Notice how the UE DockerHost has been initiated running 'open5gs_ue_init.sh' which, based on the configuration provided in 'open5gs-ue.yaml' creates two default UE connections.
+
+Enter the container and verify UE connections:
+
+``` 
+$ ./enter_container.sh ue
+
+# ifconfig
+``` 
+
+You should see interfaces uesimtun0 (for the upf_cld) and uesimtun1 (for the upf_mec) active.
+
+```
+uesimtun0: flags=369<UP,POINTOPOINT,NOTRAILERS,RUNNING,PROMISC>  mtu 1400
+        inet 10.45.0.2  netmask 255.255.255.255  destination 10.45.0.2
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+uesimtun1: flags=369<UP,POINTOPOINT,NOTRAILERS,RUNNING,PROMISC>  mtu 1400
+        inet 10.46.0.2  netmask 255.255.255.255  destination 10.46.0.2
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
+
+Start a ping test to check connectivity:
+``` 
+# ping -c 3 -n -I uesimtun0 www.google.com
+# ping -c 3 -n -I uesimtun1 www.google.com
+``` 
 
 ### Test the environment
 
-In two terminals start two tcpdump for both upf and upf_mec
+In two terminals start two tcpdump for both upf_cld and upf_mec
 
 ``` 
-$ ./start_tcpdump.sh upf
+$ ./start_tcpdump.sh upf_cld
 $ ./start_tcpdump.sh upf_mec
 ``` 
 
 #### Latency test
 Enter in the UE container:
 ``` 
-# ./enter_container.sh ue
+$ ./enter_container.sh ue
 ``` 
 
 Start ping test on the interfaces related to the two slices:
 ``` 
-# ping -c 3 -n -I uesimtun0 www.google.com
-# ping -c 3 -n -I uesimtun1 www.google.com
+# ping -c 3 -n -I uesimtun0 10.45.0.1
+# ping -c 3 -n -I uesimtun1 10.46.0.1
 ``` 
 
 Observe the Round Trip Time using uesimtun0 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and ueransim1 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
@@ -121,9 +160,10 @@ Start bandwidth test leveraging the two slices:
 # iperf3 -c 10.46.0.1 -B 10.46.0.2 -t 5
 ``` 
 
-Observe the Round Trip Time using the UE interface 10.45.0.2 (slice 1 - reaching the UPF in the "cloud DC" with DNN="internet" ) and using the UE interface 10.46.0.2 (slice 2 - reaching the UPF in the 'mec DC' with DNN="mec")
+Observe how the data-rate in the two cases follows the maximum data-rate specified for the two slices (2 Mbps for sst 1 and 10Mbps for sst 2).
 
-Change the maximum bit-rate available for one slice:
+
+#### Change the maximum bit-rate available for one slice:
 
 Open the open5gs WebUI and change the DL/UL bandwidth for slice 1.
 
@@ -132,7 +172,7 @@ Enter in the UE container:
 $ ./enter_container.sh ue
 ``` 
 
-Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC.
+Update the PDU session in the UE. Notice how the session is started specifying the slice, not the APN. The APN, and thus the associated UPF, is selected by the 5GC since, in subscriber_profile.json a slice is associated to a session with specific DNN.
 
 ```
 # ./nr-cli imsi-001011234567895

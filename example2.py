@@ -8,7 +8,9 @@ from comnetsemu.net import Containernet, VNFManager
 from mininet.link import TCLink
 from mininet.log import info, setLogLevel
 from mininet.node import Controller
-from open5gs.Open5GS  import Open5GS
+
+from python_modules.Open5GS   import Open5GS
+
 import json, time
 
 if __name__ == "__main__":
@@ -60,9 +62,9 @@ if __name__ == "__main__":
 
 
     info("*** Adding Host for open5gs UPF\n")
-    env["COMPONENT_NAME"]="upf"
-    upf = net.addDockerHost(
-        "upf",
+    env["COMPONENT_NAME"]="upf_cld"
+    upf_cld = net.addDockerHost(
+        "upf_cld",
         dimage="my5gc",
         ip="192.168.0.112/24",
         # dcmd="",
@@ -208,7 +210,7 @@ if __name__ == "__main__":
     net.addLink(s2,  s3, bw=1000, delay="50ms", intfName1="s2-s3",  intfName2="s3-s2")
     
     net.addLink(cp,      s3, bw=1000, delay="1ms", intfName1="cp-s1",  intfName2="s1-cp")
-    net.addLink(upf,     s3, bw=1000, delay="1ms", intfName1="upf-s3",  intfName2="s3-upf")
+    net.addLink(upf_cld, s3, bw=1000, delay="1ms", intfName1="upf-s3",  intfName2="s3-upf_cld")
     net.addLink(upf_mec, s2, bw=1000, delay="1ms", intfName1="upf_mec-s2", intfName2="s2-upf_mec")
 
     net.addLink(ue,  s1, bw=1000, delay="1ms", intfName1="ue-s1",  intfName2="s1-ue")
@@ -217,7 +219,7 @@ if __name__ == "__main__":
     print(f"*** Open5GS: Init subscriber for UE 0")
     o5gs   = Open5GS( "172.17.0.2" ,"27017")
     o5gs.removeAllSubscribers()
-    with open( prj_folder + "/open5gs/subscriber_profile.json" , 'r') as f:
+    with open( prj_folder + "/python_modules/subscriber_profile.json" , 'r') as f:
         profile = json.load( f )
     o5gs.addSubscriber(profile)
 

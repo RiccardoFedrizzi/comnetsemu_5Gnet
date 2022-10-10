@@ -3,7 +3,7 @@
 if [[ -z "$COMPONENT_NAME" ]]; then
 	echo "Error: COMPONENT_NAME environment variable not set"; exit 1;
 
-elif [[ "$COMPONENT_NAME" =~ ^upf$ ]]; then
+elif [[ "$COMPONENT_NAME" =~ ^upf_cld$ ]]; then
     ip tuntap add name ogstun mode tun
     ip addr add 10.45.0.1/16 dev ogstun
     ip link set ogstun up
@@ -11,7 +11,7 @@ elif [[ "$COMPONENT_NAME" =~ ^upf$ ]]; then
 
     iperf3 -B 10.45.0.1 -s -fm &
 
-    cp /open5gs/install/etc/open5gs/temp/upf.yaml /open5gs/install/etc/open5gs/upf.yaml 
+    cp /open5gs/install/etc/open5gs/temp/upf_cld.yaml /open5gs/install/etc/open5gs/upf.yaml 
 
 elif [[ "$COMPONENT_NAME" =~ ^upf_mec$ ]]; then
     ip tuntap add name ogstun mode tun
