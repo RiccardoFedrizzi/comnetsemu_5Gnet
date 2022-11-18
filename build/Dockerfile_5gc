@@ -63,12 +63,12 @@ RUN apt-get update && \
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # Get open5gs code and install
-# RUN git clone -b v2.3.2 --single-branch https://github.com/open5gs/open5gs && cd open5gs && \
-#     meson build --prefix=`pwd`/install && \
-#     ninja -C build && cd build && ninja install
-RUN git clone --recursive https://github.com/open5gs/open5gs && cd open5gs && \
-    git checkout main && meson build --prefix=`pwd`/install && \
+RUN git clone -b v2.4.4 --single-branch https://github.com/open5gs/open5gs && cd open5gs && \
+    meson build --prefix=`pwd`/install && \
     ninja -C build && cd build && ninja install
+# RUN git clone --recursive https://github.com/open5gs/open5gs && cd open5gs && \
+#     git checkout main && meson build --prefix=`pwd`/install && \
+#     ninja -C build && cd build && ninja install
 
 # Building WebUI of open5gs
 RUN cd open5gs/webui && npm ci --no-optional

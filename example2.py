@@ -29,7 +29,7 @@ if __name__ == "__main__":
     info("*** Adding Host for open5gs CP\n")
     cp = net.addDockerHost(
         "cp",
-        dimage="my5gc",
+        dimage="my5gc_v2-4-4",
         ip="192.168.0.111/24",
         # dcmd="",
         dcmd="bash /open5gs/install/etc/open5gs/5gc_cp_init.sh",
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="upf_cld"
     upf_cld = net.addDockerHost(
         "upf_cld",
-        dimage="my5gc",
+        dimage="my5gc_v2-4-4",
         ip="192.168.0.112/24",
         # dcmd="",
         dcmd="bash /open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="upf_mec"
     upf_mec = net.addDockerHost(
         "upf_mec",
-        dimage="my5gc",
+        dimage="my5gc_v2-4-4",
         ip="192.168.0.113/24",
         # dcmd="",
         dcmd="bash /open5gs/install/etc/open5gs/temp/5gc_up_init.sh",
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="gnb"
     gnb = net.addDockerHost(
         "gnb", 
-        dimage="myueransim",
+        dimage="myueransim_v3-2-6",
         ip="192.168.0.131/24",
         # dcmd="",
         dcmd="bash /mnt/ueransim/open5gs_gnb_init.sh",
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     env["COMPONENT_NAME"]="ue"
     ue = net.addDockerHost(
         "ue", 
-        dimage="myueransim",
+        dimage="myueransim_v3-2-6",
         ip="192.168.0.132/24",
         # dcmd="",
         dcmd="bash /mnt/ueransim/open5gs_ue_init.sh",

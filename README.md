@@ -17,12 +17,17 @@ Clone repository in the comnetsemu VM.
 Build the necessary docker images:
 
 ```
-cd ueransim
-./build_ueransim.sh
-
-cd ../open5gs
-./build_5gc.sh
+cd build
+./build.sh
 ```
+
+Or alternatively download them from DockerHub
+
+```
+cd ../open5gs
+./dockerhub_pull.sh
+```
+
 
 ## Run experiments
 
